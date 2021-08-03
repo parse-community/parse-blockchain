@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "install": "husky install && lerna bootstrap",
-    "test": "lerna run test"
+    "test": "lerna run test --stream"
   },
   "devDependencies": {
     "husky": "6.0.0",
