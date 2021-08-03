@@ -7,7 +7,7 @@ module.exports = {
   ],
   env: {
     es2021: true,
-    jest: true,
+    mocha: true,
     node: true,
   },
   parser: '@typescript-eslint/parser',
@@ -16,6 +16,11 @@ module.exports = {
   },
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-var-requires': 'off'
+  },
+  globals: {
+    artifacts: true,
+    assert: true
   }
 };
