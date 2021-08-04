@@ -1,3 +1,4 @@
+const { assert } = require('chai');
 const index = require('../');
 const EthereumAdapter = require('../lib/EthereumAdapter').default;
 
