@@ -53,4 +53,10 @@ contract Parse {
     class.objectJSONById[_objectId] = _objectJSON;
     emit ObjectCreated(_appId, _className, _objectId, _objectJSON);
   }
+
+  function getObjectJSON(string memory _appId, string memory _className, string memory _objectId) public view returns (string memory) {
+    string memory objectJSON = appById[_appId].classByName[_className].objectJSONById[_objectId];
+    require(bytes(objectJSON).length > 0, "The object does not exist");
+    return objectJSON;
+  }
 }

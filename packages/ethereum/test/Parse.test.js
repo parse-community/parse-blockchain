@@ -275,4 +275,48 @@ contract('Parse', (accounts) => {
       );
     });
   });
+
+  describe('getObjectJSON', () => {
+    it('should get an object', async () => {
+      expect(
+        await contract.getObjectJSON('someappid', 'SomeClass', 'someobjectid')
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+      expect(
+        await contract.getObjectJSON('someappid1', 'SomeClass', 'someobjectid')
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+      expect(
+        await contract.getObjectJSON('someappid2', 'SomeClass', 'someobjectid')
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+      expect(
+        await contract.getObjectJSON('someappid', 'SomeClass1', 'someobjectid')
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+      expect(
+        await contract.getObjectJSON('someappid', 'SomeClass2', 'someobjectid')
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+      expect(
+        await contract.getObjectJSON('someappid', 'SomeClass', 'someobjectid1')
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+      expect(
+        await contract.getObjectJSON('someappid', 'SomeClass', 'someobjectid2')
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+      expect(
+        await contract.getObjectJSON(
+          'someappid',
+          'SomeClass',
+          'duplicatedobjectid'
+        )
+      ).equal(JSON.stringify({ someField: 'someValue' }));
+    });
+
+    it('should fail if the object does not exist', async () => {
+      await assert.isRejected(
+        contract.getObjectJSON(
+          'inexistendappid',
+          'InexistentClass',
+          'inexistentobjectid'
+        ),
+        /The object does not exist/
+      );
+    });
+  });
 });
