@@ -12,6 +12,22 @@ contract Parse {
     mapping(string => Class) classByName;
   }
 
+  event AppCreated (
+    string _appId
+  );
+
+  event ClassCreated (
+    string _appId,
+    string _className
+  );
+
+  event ObjectCreated (
+    string _appId,
+    string _className,
+    string _objectId,
+    string _objectJSON
+  );
+
   address public owner = msg.sender;
   string[] appsIds;
   mapping(string => App) appById;
@@ -25,13 +41,16 @@ contract Parse {
     App storage app = appById[_appId];
     if (app.classesNames.length <= 0) {
       appsIds.push(_appId);
+      emit AppCreated(_appId);
     }
     Class storage class = app.classByName[_className];
     if (class.objectsIds.length <= 0) {
       app.classesNames.push(_className);
+      emit ClassCreated(_appId, _className);
     }
     require(bytes(class.objectJSONById[_objectId]).length <= 0, "_objectId must be unique");
     class.objectsIds.push(_objectId);
     class.objectJSONById[_objectId] = _objectJSON;
+    emit ObjectCreated(_appId, _className, _objectId, _objectJSON);
   }
 }
