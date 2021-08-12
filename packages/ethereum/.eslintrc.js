@@ -22,6 +22,7 @@ module.exports = {
   globals: {
     artifacts: true,
     contract: true,
+    web3: true,
     assert: true
   }
 };

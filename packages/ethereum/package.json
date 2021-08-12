@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "files": [
+    "build",
     "lib"
   ],
   "scripts": {
+    "compile": "truffle compile",
     "build": "tsc --build ./tsconfig.json",
-    "prepare": "npm run build",
+    "prepare": "npm run compile && npm run build",
     "lint": "eslint '{migrations,src,test}/**/*.{js,ts}' --fix",
     "pretest": "npm run lint && npm run build",
     "test": "truffle test"
@@ -20,11 +22,13 @@
     "eslint": "7.27.0",
     "eslint-plugin-prettier": "3.4.0",
     "mocha": "^9.0.3",
+    "parse": "^3.3.0",
     "prettier": "2.3.0",
     "truffle": "5.4.3",
     "typescript": "4.3.2"
   },
   "dependencies": {
-    "@parse/blockchain": "^0.0.0"
+    "@parse/blockchain": "^0.0.0",
+    "web3": "^1.5.1"
   }
 }
