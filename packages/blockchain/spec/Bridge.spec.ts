@@ -65,7 +65,7 @@ describe('Bridge', () => {
 
       await triggers.maybeRunTrigger(
         triggers.Types.afterSave,
-        undefined,
+        {},
         someObject,
         null,
         {
@@ -94,7 +94,7 @@ describe('Bridge', () => {
 
       await triggers.maybeRunTrigger(
         triggers.Types.afterSave,
-        undefined,
+        {},
         someObject,
         null,
         {
@@ -123,7 +123,7 @@ describe('Bridge', () => {
       try {
         await triggers.maybeRunTrigger(
           triggers.Types.beforeSave,
-          undefined,
+          {},
           someObject,
           someObject,
           {
@@ -159,7 +159,7 @@ describe('Bridge', () => {
 
       await triggers.maybeRunTrigger(
         triggers.Types.beforeSave,
-        undefined,
+        {},
         someObject,
         someObject,
         {
@@ -188,7 +188,7 @@ describe('Bridge', () => {
       try {
         await triggers.maybeRunTrigger(
           triggers.Types.beforeDelete,
-          undefined,
+          {},
           someObject,
           null,
           {
@@ -224,7 +224,7 @@ describe('Bridge', () => {
 
       await triggers.maybeRunTrigger(
         triggers.Types.beforeDelete,
-        undefined,
+        {},
         someObject,
         null,
         {
@@ -277,7 +277,7 @@ describe('Bridge', () => {
 
       const result = await triggers.maybeRunTrigger(
         triggers.Types.afterSave,
-        undefined,
+        {},
         someObject,
         null,
         {
@@ -332,7 +332,7 @@ describe('Bridge', () => {
 
       const result = await triggers.maybeRunTrigger(
         triggers.Types.afterSave,
-        undefined,
+        {},
         someObject,
         null,
         {

@@ -41,4 +41,15 @@ export default class EthereumAdapter implements BlockchainAdapter {
       gas,
     });
   }
+
+  async get(
+    className: string,
+    objectId: string
+  ): Promise<Record<string, unknown>> {
+    return JSON.parse(
+      await this.contract.methods
+        .getObjectJSON(Parse.applicationId, className, objectId)
+        .call()
+    );
+  }
 }

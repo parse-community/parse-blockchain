@@ -5,11 +5,12 @@ const EthereumAdapter = require('../lib/EthereumAdapter').default;
 const ParseArtifact = artifacts.require('Parse');
 
 contract('Parse', (accounts) => {
-  let contract;
+  let ethereumAdapter;
 
   before(async () => {
-    contract = await ParseArtifact.deployed();
     Parse.initialize('someappid');
+    const contract = await ParseArtifact.deployed();
+    ethereumAdapter = new EthereumAdapter(web3, contract.address, accounts[0]);
   });
 
   describe('send', () => {
@@ -17,11 +18,6 @@ contract('Parse', (accounts) => {
       const someObject = new Parse.Object('SomeClass');
       someObject.id = 'someobjectid';
       someObject.set('someField', 'someValue');
-      const ethereumAdapter = new EthereumAdapter(
-        web3,
-        contract.address,
-        accounts[0]
-      );
       const result = await ethereumAdapter.send(someObject._toFullJSON());
       expect(Object.keys(result.events)).to.eql([
         'AppCreated',
@@ -50,6 +46,17 @@ contract('Parse', (accounts) => {
         'someobjectid'
       );
       expect(result.events.ObjectCreated.returnValues._objectJSON).to.equal(
+        JSON.stringify({
+          someField: 'someValue',
+        })
+      );
+    });
+  });
+
+  describe('get', () => {
+    it('should get sent objects', async () => {
+      const objectJSON = await ethereumAdapter.get('SomeClass', 'someobjectid');
+      expect(JSON.stringify(objectJSON)).to.equal(
         JSON.stringify({
           someField: 'someValue',
         })
