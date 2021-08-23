@@ -1,6 +1,7 @@
-import { Parse } from 'parse/node';
+import { CoreManager, Parse } from 'parse/node';
 import MQAdapter from '../src/MQAdapter';
 import SimpleMQAdapter from '../src/SimpleMQAdapter';
+import { BlockchainStatus } from '../src/types';
 import Worker from '../src/Worker';
 
 const fakeBlockchainAdapter = {
@@ -10,7 +11,7 @@ const fakeBlockchainAdapter = {
 
 describe('Worker', () => {
   beforeAll(() => {
-    Parse.initialize('someappid');
+    Parse.initialize('someappid', 'somejavascriptkey', 'somemasterkey');
   });
 
   describe('initialize', () => {
@@ -46,62 +47,113 @@ describe('Worker', () => {
     });
   });
 
-  // describe('handleMessage', () => {
-  //   it('should send messages to the blockchain adapter', (done) => {
-  //     const simpleMQAdapter = new SimpleMQAdapter();
+  describe('handleMessage', () => {
+    it('should send messages to the blockchain adapter', (done) => {
+      const simpleMQAdapter = new SimpleMQAdapter();
 
-  //     const someObject = new Parse.Object('SomeClass');
-  //     someObject.id = 'someid';
+      const someObject = new Parse.Object('SomeClass');
+      someObject.id = 'someid';
 
-  //     const worker = new Worker();
-  //     worker.initialize(
-  //       {
-  //         send: (parseObjectFullJSON: Record<string, unknown>) => {
-  //           expect(parseObjectFullJSON).toEqual(someObject._toFullJSON());
-  //           done();
-  //           return Promise.resolve({});
-  //         },
-  //         get: () => Promise.resolve({}),
-  //       },
-  //       simpleMQAdapter
-  //     );
+      const blockchainResult = { someField: 'someValue' };
 
-  //     simpleMQAdapter.publish(
-  //       `${Parse.applicationId}-parse-server-blockchain`,
-  //       JSON.stringify(someObject._toFullJSON())
-  //     );
-  //   });
+      let findCalls = 0;
+      const queryController = CoreManager.getQueryController();
+      const originalQueryControllerFind = queryController.find;
+      queryController.find = (className, params, options) => {
+        findCalls++;
+        expect(className).toBe('SomeClass');
+        expect(params).toEqual({ limit: 1, where: { objectId: 'someid' } });
+        expect(options.useMasterKey).toBe(true);
+        return Promise.resolve({ results: [someObject] });
+      };
 
-  //   it('should retry in the case of error sending messages to the blockchain adapter', (done) => {
-  //     const simpleMQAdapter = new SimpleMQAdapter();
+      let saveCalls = 0;
+      const objectController = CoreManager.getObjectController();
+      const originalObjectControllerSave = objectController.save;
+      objectController.save = (object, options) => {
+        saveCalls++;
+        expect(findCalls).toEqual(1);
+        if (saveCalls === 1) {
+          expect(object).toEqual([]);
+          expect(options).toEqual({ useMasterKey: true });
+          return Promise.resolve([]);
+        } else if (saveCalls === 2) {
+          expect(object._toFullJSON()).toEqual({
+            ...someObject._toFullJSON(),
+            blockchainStatus: BlockchainStatus.Sending,
+          });
+          expect(options).toEqual({ useMasterKey: true });
+          return Promise.resolve(object);
+        } else if (saveCalls === 3) {
+          expect(object).toEqual([]);
+          expect(options).toEqual({ useMasterKey: true });
+          return Promise.resolve([]);
+        } else if (saveCalls === 4) {
+          expect(object._toFullJSON()).toEqual({
+            ...someObject._toFullJSON(),
+            blockchainStatus: BlockchainStatus.Sent,
+            blockchainResult,
+          });
+          expect(options).toEqual({ useMasterKey: true });
 
-  //     const someObject = new Parse.Object('SomeClass');
-  //     someObject.id = 'someid';
+          queryController.find = originalQueryControllerFind;
+          objectController.save = originalObjectControllerSave;
+          done();
 
-  //     let sendCounter = 0;
+          return Promise.resolve(object);
+        } else {
+          throw new Error('Should call only 2 times');
+        }
+      };
 
-  //     const worker = new Worker();
-  //     worker.initialize(
-  //       {
-  //         send: (parseObjectFullJSON: Record<string, unknown>) => {
-  //           expect(parseObjectFullJSON).toEqual(someObject._toFullJSON());
-  //           sendCounter++;
-  //           if (sendCounter === 6) {
-  //             done();
-  //             return Promise.resolve({});
-  //           } else {
-  //             throw Error();
-  //           }
-  //         },
-  //         get: () => Promise.resolve({}),
-  //       },
-  //       simpleMQAdapter
-  //     );
+      const worker = new Worker();
+      worker.initialize(
+        {
+          send: (parseObjectFullJSON: Record<string, unknown>) => {
+            expect(parseObjectFullJSON).toEqual(someObject._toFullJSON());
+            return Promise.resolve(blockchainResult);
+          },
+          get: () => Promise.resolve({}),
+        },
+        simpleMQAdapter
+      );
 
-  //     simpleMQAdapter.publish(
-  //       `${Parse.applicationId}-parse-server-blockchain`,
-  //       JSON.stringify(someObject._toFullJSON())
-  //     );
-  //   }, 15000);
-  // });
+      simpleMQAdapter.publish(
+        `${Parse.applicationId}-parse-server-blockchain`,
+        JSON.stringify(someObject._toFullJSON())
+      );
+    });
+
+    // it('should retry in the case of error sending messages to the blockchain adapter', (done) => {
+    //   const simpleMQAdapter = new SimpleMQAdapter();
+
+    //   const someObject = new Parse.Object('SomeClass');
+    //   someObject.id = 'someid';
+
+    //   let sendCounter = 0;
+
+    //   const worker = new Worker();
+    //   worker.initialize(
+    //     {
+    //       send: (parseObjectFullJSON: Record<string, unknown>) => {
+    //         expect(parseObjectFullJSON).toEqual(someObject._toFullJSON());
+    //         sendCounter++;
+    //         if (sendCounter === 6) {
+    //           done();
+    //           return Promise.resolve({});
+    //         } else {
+    //           throw Error();
+    //         }
+    //       },
+    //       get: () => Promise.resolve({}),
+    //     },
+    //     simpleMQAdapter
+    //   );
+
+    //   simpleMQAdapter.publish(
+    //     `${Parse.applicationId}-parse-server-blockchain`,
+    //     JSON.stringify(someObject._toFullJSON())
+    //   );
+    // }, 15000);
+  });
 });
