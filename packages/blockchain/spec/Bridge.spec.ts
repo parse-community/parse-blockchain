@@ -104,6 +104,110 @@ describe('Bridge', () => {
       );
     });
 
+    it('should throw error for new blockchain classes objects with blockchainStatus on before save', async () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      simpleMQAdapter.consume(
+        `${Parse.applicationId}-parse-server-blockchain`,
+        () => {
+          throw new Error('Should not receive message');
+        }
+      );
+
+      const someObject = new Parse.Object('SomeClass');
+      someObject.id = 'someid';
+      someObject.set('blockchainStatus', 'Sending');
+
+      try {
+        await triggers.maybeRunTrigger(
+          triggers.Types.beforeSave,
+          {},
+          someObject,
+          null,
+          {
+            applicationId: Parse.applicationId,
+          },
+          {}
+        );
+        throw new Error('Should throw error');
+      } catch (e) {
+        expect(e).toBeInstanceOf(Parse.Error);
+        expect(e.code).toBe(Parse.Error.OPERATION_FORBIDDEN);
+        expect(e.message).toBe(
+          'unauthorized: cannot set blockchainStatus field'
+        );
+      }
+    });
+
+    it('should throw error for new blockchain classes objects with blockchainResult on before save', async () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      simpleMQAdapter.consume(
+        `${Parse.applicationId}-parse-server-blockchain`,
+        () => {
+          throw new Error('Should not receive message');
+        }
+      );
+
+      const someObject = new Parse.Object('SomeClass');
+      someObject.id = 'someid';
+      someObject.set('blockchainResult', {});
+
+      try {
+        await triggers.maybeRunTrigger(
+          triggers.Types.beforeSave,
+          {},
+          someObject,
+          null,
+          {
+            applicationId: Parse.applicationId,
+          },
+          {}
+        );
+        throw new Error('Should throw error');
+      } catch (e) {
+        expect(e).toBeInstanceOf(Parse.Error);
+        expect(e.code).toBe(Parse.Error.OPERATION_FORBIDDEN);
+        expect(e.message).toBe(
+          'unauthorized: cannot set blockchainResult field'
+        );
+      }
+    });
+
+    it('should not throw error for new blockchain classes objects when not setting blockchainStatus nor blockchainResult on before save', async () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      simpleMQAdapter.consume(
+        `${Parse.applicationId}-parse-server-blockchain`,
+        () => {
+          throw new Error('Should not receive message');
+        }
+      );
+
+      const someObject = new Parse.Object('SomeClass');
+      someObject.id = 'someid';
+
+      await triggers.maybeRunTrigger(
+        triggers.Types.beforeSave,
+        {},
+        someObject,
+        null,
+        {
+          applicationId: Parse.applicationId,
+        },
+        {}
+      );
+    });
+
     it('should throw error for existing blockchain classes objects on before save', async () => {
       const simpleMQAdapter = new SimpleMQAdapter();
 
@@ -139,6 +243,72 @@ describe('Bridge', () => {
           'unauthorized: cannot update objects on blockchain bridge'
         );
       }
+    });
+
+    it('should not throw error for existing blockchain classes objects when updating blockchainStatus to sending with master key on before save', async () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      simpleMQAdapter.consume(
+        `${Parse.applicationId}-parse-server-blockchain`,
+        () => {
+          throw new Error('Should not receive message');
+        }
+      );
+
+      const someObject = new Parse.Object('SomeClass');
+      someObject.id = 'someid';
+
+      const sameObject = new Parse.Object('SomeClass');
+      sameObject.id = 'someid';
+      sameObject.set('blockchainStatus', 'Sending');
+
+      await triggers.maybeRunTrigger(
+        triggers.Types.beforeSave,
+        { isMaster: true },
+        sameObject,
+        someObject,
+        {
+          applicationId: Parse.applicationId,
+        },
+        {}
+      );
+    });
+
+    it('should not throw error for existing blockchain classes objects when updating blockchainStatus to sent with master key on before save', async () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      simpleMQAdapter.consume(
+        `${Parse.applicationId}-parse-server-blockchain`,
+        () => {
+          throw new Error('Should not receive message');
+        }
+      );
+
+      const someObject = new Parse.Object('SomeClass');
+      someObject.id = 'someid';
+      someObject.set('blockchainStatus', 'Sending');
+
+      const sameObject = new Parse.Object('SomeClass');
+      sameObject.id = 'someid';
+      sameObject.set('blockchainStatus', 'Sent');
+      sameObject.set('blockchainResult', {});
+
+      await triggers.maybeRunTrigger(
+        triggers.Types.beforeSave,
+        { isMaster: true },
+        sameObject,
+        someObject,
+        {
+          applicationId: Parse.applicationId,
+        },
+        {}
+      );
     });
 
     it('should not throw error for existing regular classes objects on before save', async () => {

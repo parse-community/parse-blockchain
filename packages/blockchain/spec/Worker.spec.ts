@@ -123,37 +123,5 @@ describe('Worker', () => {
         JSON.stringify(someObject._toFullJSON())
       );
     });
-
-    // it('should retry in the case of error sending messages to the blockchain adapter', (done) => {
-    //   const simpleMQAdapter = new SimpleMQAdapter();
-
-    //   const someObject = new Parse.Object('SomeClass');
-    //   someObject.id = 'someid';
-
-    //   let sendCounter = 0;
-
-    //   const worker = new Worker();
-    //   worker.initialize(
-    //     {
-    //       send: (parseObjectFullJSON: Record<string, unknown>) => {
-    //         expect(parseObjectFullJSON).toEqual(someObject._toFullJSON());
-    //         sendCounter++;
-    //         if (sendCounter === 6) {
-    //           done();
-    //           return Promise.resolve({});
-    //         } else {
-    //           throw Error();
-    //         }
-    //       },
-    //       get: () => Promise.resolve({}),
-    //     },
-    //     simpleMQAdapter
-    //   );
-
-    //   simpleMQAdapter.publish(
-    //     `${Parse.applicationId}-parse-server-blockchain`,
-    //     JSON.stringify(someObject._toFullJSON())
-    //   );
-    // }, 15000);
   });
 });
