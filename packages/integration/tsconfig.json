@@ -2,7 +2,8 @@
   "include": ["./"],
   "compilerOptions": {
     "module": "commonjs",
-    "allowJs": true
+    "allowJs": true,
+    "esModuleInterop": true
   },
   "typeAcquisition": { "include": ["jest"] }
 }
