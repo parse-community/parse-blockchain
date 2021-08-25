@@ -4,15 +4,22 @@ import BlockchainAdapter from './BlockchainAdapter';
 import MQAdapter from './MQAdapter';
 import SimpleMQAdapter from './SimpleMQAdapter';
 
+interface Options {
+  waitSendingAttempts?: number;
+  waitSendingSleepMS?: number;
+}
+
 export default class Worker {
   private initialized = false;
   private blockchainAdapter: BlockchainAdapter;
   private mqAdapter: MQAdapter;
   private fails = 0;
+  private options: Options;
 
   initialize(
     blockchainAdapter: BlockchainAdapter,
-    mqAdapter?: MQAdapter
+    mqAdapter?: MQAdapter,
+    options?: Options
   ): void {
     if (this.initialized) {
       throw new Error('The worker is already initialized');
@@ -23,6 +30,16 @@ export default class Worker {
     this.blockchainAdapter = blockchainAdapter;
 
     this.mqAdapter = mqAdapter || new SimpleMQAdapter();
+
+    const defaultOptions = {
+      waitSendingAttempts: 30, // ~30 mins
+      waitSendingSleepMS: 60 * 1000, // 1 min
+    };
+    this.options = options || defaultOptions;
+    this.options.waitSendingAttempts =
+      this.options.waitSendingAttempts || defaultOptions.waitSendingAttempts;
+    this.options.waitSendingSleepMS =
+      this.options.waitSendingSleepMS || defaultOptions.waitSendingSleepMS;
 
     this.subscribe();
   }
@@ -47,7 +64,7 @@ export default class Worker {
     const { className, objectId } = parseObjectFullJSON;
 
     let blockchainStatus: BlockchainStatus;
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < this.options.waitSendingAttempts; i++) {
       // ~30 mins
       try {
         blockchainStatus = await this.getStatus(className, objectId);
@@ -65,7 +82,9 @@ export default class Worker {
           blockchainStatus
         );
         if (blockchainStatus === BlockchainStatus.Sending) {
-          await new Promise((resolve) => setTimeout(resolve, 60 * 1000)); // 1 min
+          await new Promise((resolve) =>
+            setTimeout(resolve, this.options.waitSendingSleepMS)
+          ); // 1 min
         } else {
           this.fails = 0;
           ack();
@@ -79,10 +98,11 @@ export default class Worker {
     let blockchainResult: Record<string, unknown>;
     if (blockchainStatus === BlockchainStatus.Sending) {
       try {
-        blockchainResult = await this.blockchainAdapter.get(
-          className,
-          objectId
-        );
+        blockchainResult = {
+          type: 'Get',
+          input: { className, objectId },
+          output: await this.blockchainAdapter.get(className, objectId),
+        };
         blockchainStatus = BlockchainStatus.Sent;
       } catch (e) {
         if (!/The object does not exist/.test(e)) {
@@ -110,13 +130,19 @@ export default class Worker {
 
     if (blockchainStatus === BlockchainStatus.Sending) {
       try {
-        blockchainResult = await this.blockchainAdapter.send(
-          parseObjectFullJSON
-        );
+        blockchainResult = {
+          type: 'Send',
+          input: parseObjectFullJSON,
+          output: await this.blockchainAdapter.send(parseObjectFullJSON),
+        };
         blockchainStatus = BlockchainStatus.Sent;
       } catch (e) {
         console.error('Could not send object', parseObjectFullJSON, e);
-        blockchainResult = e;
+        blockchainResult = {
+          type: 'Error',
+          input: parseObjectFullJSON,
+          error: e.toString(),
+        };
         blockchainStatus = BlockchainStatus.Failed;
       }
     }
@@ -138,6 +164,8 @@ export default class Worker {
         e
       );
       this.fails++;
+      nack();
+      return;
     }
 
     ack();
