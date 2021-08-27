@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "clean": "lerna clean && rm -r node_modules",
     "install": "husky install && lerna bootstrap",
     "test": "lerna run test --stream"
   },

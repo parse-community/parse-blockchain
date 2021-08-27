@@ -4,6 +4,7 @@
   "main": "lib/index.js",
   "files": [
     "build",
+    "migrations",
     "lib"
   ],
   "scripts": {
