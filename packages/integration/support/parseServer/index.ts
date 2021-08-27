@@ -1,7 +1,11 @@
 import ParseServer from 'parse-server';
 import express from 'express';
+import Web3 from 'web3';
 import { bridge, worker } from '@parse/blockchain';
 import { EthereumAdapter } from '@parse/ethereum';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const contract = require('../../../ethereum/build/contracts/Parse.json');
 
 let parseServer;
 let expressServer;
@@ -29,8 +33,11 @@ export async function start(): Promise<void> {
     }
   });
 
+  const web3 = new Web3('ws://127.0.0.1:8545');
+  web3.eth.accounts.wallet.add('86ae9c6148520e120a7f01ad06346a3b455ca181e7300bcede8c290d9fbfddbb');
+
   bridge.initialize(['SomeBlockchainClass']);
-  // worker.initialize(new EthereumAdapter({}, '', ''));
+  worker.initialize(new EthereumAdapter(web3, contract.networks['1000000000000'].address, '0xCE0C2Be1ce4FD3CA29Dc4f59Ceceed01591E204f'));
 
   const app = express();
 

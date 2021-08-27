@@ -87,7 +87,7 @@ module.exports = {
           '86ae9c6148520e120a7f01ad06346a3b455ca181e7300bcede8c290d9fbfddbb',
           'ws://127.0.0.1:8545'
         ),
-      network_id: '*',
+      network_id: '1000000000000',
       from: '0xCE0C2Be1ce4FD3CA29Dc4f59Ceceed01591E204f',
     },
   },
