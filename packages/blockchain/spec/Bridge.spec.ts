@@ -38,6 +38,66 @@ describe('Bridge', () => {
     });
   });
 
+  describe('handleTriggerExists', () => {
+    it('should return true for beforeSave, afterSave, and afterDelete triggers on blockchain classes', () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      expect(
+        triggers.triggerExists(
+          'SomeClass',
+          triggers.Types.beforeSave,
+          Parse.applicationId
+        )
+      ).toBe(true);
+      expect(
+        triggers.triggerExists(
+          'SomeClass',
+          triggers.Types.afterSave,
+          Parse.applicationId
+        )
+      ).toBe(true);
+      expect(
+        triggers.triggerExists(
+          'SomeClass',
+          triggers.Types.beforeDelete,
+          Parse.applicationId
+        )
+      ).toBe(true);
+    });
+
+    it('should return false for beforeSave, afterSave, and afterDelete triggers on regular classes without triggers', () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      expect(
+        triggers.triggerExists(
+          'SomeOtherClass',
+          triggers.Types.beforeSave,
+          Parse.applicationId
+        )
+      ).toBe(false);
+      expect(
+        triggers.triggerExists(
+          'SomeOtherClass',
+          triggers.Types.afterSave,
+          Parse.applicationId
+        )
+      ).toBe(false);
+      expect(
+        triggers.triggerExists(
+          'SomeOtherClass',
+          triggers.Types.beforeDelete,
+          Parse.applicationId
+        )
+      ).toBe(false);
+    });
+  });
+
   describe('handleMaybeRunTrigger', () => {
     it('should publish new blockchain classes objects on after save', async () => {
       const simpleMQAdapter = new SimpleMQAdapter();
@@ -229,7 +289,9 @@ describe('Bridge', () => {
           triggers.Types.beforeSave,
           {},
           someObject,
-          someObject,
+          Object.assign(someObject, {
+            fetch: () => Promise.resolve(),
+          }),
           {
             applicationId: Parse.applicationId,
           },
@@ -269,7 +331,9 @@ describe('Bridge', () => {
         triggers.Types.beforeSave,
         { isMaster: true },
         sameObject,
-        someObject,
+        Object.assign(someObject, {
+          fetch: () => Promise.resolve(),
+        }),
         {
           applicationId: Parse.applicationId,
         },
@@ -303,7 +367,9 @@ describe('Bridge', () => {
         triggers.Types.beforeSave,
         { isMaster: true },
         sameObject,
-        someObject,
+        Object.assign(someObject, {
+          fetch: () => Promise.resolve(),
+        }),
         {
           applicationId: Parse.applicationId,
         },
@@ -331,7 +397,9 @@ describe('Bridge', () => {
         triggers.Types.beforeSave,
         {},
         someObject,
-        someObject,
+        Object.assign(someObject, {
+          fetch: () => Promise.resolve(),
+        }),
         {
           applicationId: Parse.applicationId,
         },

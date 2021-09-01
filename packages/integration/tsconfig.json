@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "allowJs": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "typeAcquisition": { "include": ["jest"] }
 }

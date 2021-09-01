@@ -96,7 +96,7 @@ describe('Worker', () => {
             blockchainStatus: BlockchainStatus.Sent,
             blockchainResult: {
               type: 'Send',
-              input: someObject._toFullJSON(),
+              input: JSON.stringify(someObject._toFullJSON()),
               output: blockchainResult,
             },
           });
@@ -176,7 +176,7 @@ describe('Worker', () => {
             blockchainStatus: BlockchainStatus.Failed,
             blockchainResult: {
               type: 'Error',
-              input: someObject._toFullJSON(),
+              input: JSON.stringify(someObject._toFullJSON()),
               error: error.toString(),
             },
           });
@@ -259,7 +259,7 @@ describe('Worker', () => {
             blockchainStatus: BlockchainStatus.Sent,
             blockchainResult: {
               type: 'Send',
-              input: someObject._toFullJSON(),
+              input: JSON.stringify(someObject._toFullJSON()),
               output: blockchainResult,
             },
           });
@@ -355,7 +355,7 @@ describe('Worker', () => {
             blockchainStatus: BlockchainStatus.Sent,
             blockchainResult: {
               type: 'Send',
-              input: someObject._toFullJSON(),
+              input: JSON.stringify(someObject._toFullJSON()),
               output: blockchainResult,
             },
           });
@@ -581,7 +581,7 @@ describe('Worker', () => {
             blockchainStatus: BlockchainStatus.Sent,
             blockchainResult: {
               type: 'Send',
-              input: someObject._toFullJSON(),
+              input: JSON.stringify(someObject._toFullJSON()),
               output: blockchainResult,
             },
           });
@@ -776,7 +776,7 @@ describe('Worker', () => {
           blockchainStatus: BlockchainStatus.Sent,
           blockchainResult: {
             type: 'Send',
-            input: someObject._toFullJSON(),
+            input: JSON.stringify(someObject._toFullJSON()),
             output: blockchainResult,
           },
         });

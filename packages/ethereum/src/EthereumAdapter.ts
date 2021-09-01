@@ -29,7 +29,7 @@ export default class EthereumAdapter implements BlockchainAdapter {
           __type: undefined,
           className: undefined,
           objectId: undefined,
-          _updated_at: undefined,
+          updatedAt: undefined,
         },
       })
     );

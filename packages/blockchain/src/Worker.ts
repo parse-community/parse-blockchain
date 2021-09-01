@@ -132,7 +132,7 @@ export default class Worker {
       try {
         blockchainResult = {
           type: 'Send',
-          input: parseObjectFullJSON,
+          input: JSON.stringify(parseObjectFullJSON),
           output: await this.blockchainAdapter.send(parseObjectFullJSON),
         };
         blockchainStatus = BlockchainStatus.Sent;
@@ -140,7 +140,7 @@ export default class Worker {
         console.error('Could not send object', parseObjectFullJSON, e);
         blockchainResult = {
           type: 'Error',
-          input: parseObjectFullJSON,
+          input: JSON.stringify(parseObjectFullJSON),
           error: e.toString(),
         };
         blockchainStatus = BlockchainStatus.Failed;

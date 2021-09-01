@@ -4,6 +4,7 @@ import { BlockchainStatus } from './types';
 import MQAdapter from './MQAdapter';
 import SimpleMQAdapter from './SimpleMQAdapter';
 
+const triggerExists = triggers.triggerExists;
 const maybeRunTrigger = triggers.maybeRunTrigger;
 
 export default class Bridge {
@@ -21,7 +22,25 @@ export default class Bridge {
     this.classNames = classNames;
     this.mqAdapter = mqAdapter || new SimpleMQAdapter();
 
+    triggers.triggerExists = this.handleTriggerExists.bind(this);
     triggers.maybeRunTrigger = this.handleMaybeRunTrigger.bind(this);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private handleTriggerExists(...args: any[]) {
+    const [className, triggerType] = args;
+    if (
+      this.classNames.includes(className) &&
+      [
+        triggers.Types.beforeSave,
+        triggers.Types.afterSave,
+        triggers.Types.beforeDelete,
+      ].includes(triggerType)
+    ) {
+      return true;
+    }
+
+    return triggerExists(...args);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,6 +52,7 @@ export default class Bridge {
       this.classNames.includes(parseObject.className)
     ) {
       if (originalParseObject) {
+        await originalParseObject.fetch({ useMasterKey: true });
         if (
           !isMaster ||
           ((originalParseObject.get('blockchainStatus') !== undefined ||

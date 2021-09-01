@@ -4,10 +4,12 @@
   "scripts": {
     "clean": "lerna clean && rm -r node_modules",
     "install": "husky install && lerna bootstrap",
+    "build": "lerna run build",
     "test": "lerna run test --stream"
   },
   "devDependencies": {
     "husky": "6.0.0",
-    "lerna": "^4.0.0"
+    "lerna": "4.0.0",
+    "parse-server": "4.10.2"
   }
 }

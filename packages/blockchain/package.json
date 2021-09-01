@@ -12,18 +12,13 @@
     "pretest": "npm run lint && npm run build",
     "test": "jest --coverage"
   },
-  "peerDependencies": {
-    "parse-server": ">= 2.6.2"
-  },
   "devDependencies": {
-    "@types/express-serve-static-core": "^4.17.24",
     "@types/jest": "26.0.23",
-    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/eslint-plugin": "4.28.4",
     "@typescript-eslint/parser": "4.27.0",
     "eslint": "7.27.0",
-    "eslint-plugin-prettier": "3.4.0",    
+    "eslint-plugin-prettier": "3.4.0",
     "jest": "27.0.3",
-    "parse-server": "4.5.0",
     "prettier": "2.3.0",
     "ts-jest": "27.0.2",
     "typescript": "4.3.2"
