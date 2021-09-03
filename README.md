@@ -197,8 +197,11 @@ http://localhost:1337/parse/classes/SomeBlockchainClass
 ## Learn More
 
 Learn more about Parse Server and its capabilities:
+
 [Parse Platform Web-Site](https://parseplatform.org/)
+
 [Parse Server Repository](https://github.com/parse-community/parse-server)
+
 [Parse Community](https://community.parseplatform.org/)
 
 ## Feedback and Contribution
