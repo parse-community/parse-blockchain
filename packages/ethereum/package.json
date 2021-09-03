@@ -1,6 +1,22 @@
 {
   "name": "@parse/ethereum",
   "version": "0.0.0",
+  "author": "Parse Community <admin@parseplatform.org>",
+  "description": "An experimental package that connects Parse Server to an Ethereum network.",
+  "keywords": [    
+    "parse",
+    "parse server",
+    "blockchain",
+    "ethereum"
+  ],
+  "homepage": "https://parseplatform.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/parse-community/parse-server-blockchain",
+    "directory": "packages/ethereum"
+  },
+  "bugs": "https://github.com/parse-community/parse-server-blockchain/issues",
+  "license": "MIT",
   "main": "lib/index.js",
   "files": [
     "build",

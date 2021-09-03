@@ -1,6 +1,8 @@
 {
   "name": "root",
   "private": true,
+  "author": "Parse Community <admin@parseplatform.org>",
+  "license": "MIT",
   "scripts": {
     "clean": "lerna clean && rm -r node_modules",
     "install": "husky install && lerna bootstrap",

@@ -1,6 +1,8 @@
 {
   "name": "integration",
   "private": true,
+  "author": "Parse Community <admin@parseplatform.org>",
+  "license": "MIT",
   "scripts": {
     "lint": "eslint './**/*.{js,ts}' --fix",
     "start-mongodb-runner": "mongodb-runner start",
