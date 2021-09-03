@@ -40,7 +40,10 @@ export async function start(): Promise<void> {
     '86ae9c6148520e120a7f01ad06346a3b455ca181e7300bcede8c290d9fbfddbb'
   );
 
-  bridge.initialize(['SomeBlockchainClass'], mqAdapter);
+  bridge.initialize(
+    ['SomeBlockchainClass', 'SomeBlockchainClassWithTriggers'],
+    mqAdapter
+  );
   worker.initialize(
     new EthereumAdapter(
       web3,

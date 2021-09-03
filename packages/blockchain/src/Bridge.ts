@@ -4,8 +4,16 @@ import { BlockchainStatus } from './types';
 import MQAdapter from './MQAdapter';
 import SimpleMQAdapter from './SimpleMQAdapter';
 
+const getTrigger = triggers.getTrigger;
 const triggerExists = triggers.triggerExists;
 const maybeRunTrigger = triggers.maybeRunTrigger;
+
+const beforeDeleteTriggerHandler = () => {
+  throw new Parse.Error(
+    Parse.Error.OPERATION_FORBIDDEN,
+    'unauthorized: cannot delete objects on blockchain bridge'
+  );
+};
 
 export default class Bridge {
   private initialized = false;
@@ -22,8 +30,22 @@ export default class Bridge {
     this.classNames = classNames;
     this.mqAdapter = mqAdapter || new SimpleMQAdapter();
 
+    triggers.getTrigger = this.handleGetTrigger.bind(this);
     triggers.triggerExists = this.handleTriggerExists.bind(this);
     triggers.maybeRunTrigger = this.handleMaybeRunTrigger.bind(this);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private handleGetTrigger(...args: any[]) {
+    const [className, triggerType] = args;
+    if (
+      this.classNames.includes(className) &&
+      triggerType === triggers.Types.beforeDelete
+    ) {
+      return beforeDeleteTriggerHandler;
+    }
+
+    return getTrigger(...args);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -102,10 +124,7 @@ export default class Bridge {
       triggerType === triggers.Types.beforeDelete &&
       this.classNames.includes(parseObject.className)
     ) {
-      throw new Parse.Error(
-        Parse.Error.OPERATION_FORBIDDEN,
-        'unauthorized: cannot delete objects on blockchain bridge'
-      );
+      beforeDeleteTriggerHandler();
     }
 
     return maybeRunTrigger(...args);

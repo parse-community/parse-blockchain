@@ -10,6 +10,9 @@ module.exports = {
     jest: true,
     node: true,
   },
+  globals: {
+    Parse: true,
+  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',

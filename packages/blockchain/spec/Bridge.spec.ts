@@ -38,6 +38,45 @@ describe('Bridge', () => {
     });
   });
 
+  describe('handleGetTrigger', () => {
+    it('should return default before delete handler on blockchain classes', () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      expect(
+        triggers.getTrigger(
+          'SomeClass',
+          triggers.Types.beforeDelete,
+          Parse.applicationId
+        )
+      ).toThrow(/unauthorized: cannot delete objects on blockchain bridge/);
+    });
+
+    it('should run original function otherwise', () => {
+      const simpleMQAdapter = new SimpleMQAdapter();
+
+      const bridge = new Bridge();
+      bridge.initialize(['SomeClass'], simpleMQAdapter);
+
+      expect(
+        triggers.getTrigger(
+          'SomeOtherClass',
+          triggers.Types.beforeDelete,
+          Parse.applicationId
+        )
+      ).toBe(undefined);
+      expect(
+        triggers.getTrigger(
+          'SomeClass',
+          triggers.Types.afterSave,
+          Parse.applicationId
+        )
+      ).toBe(undefined);
+    });
+  });
+
   describe('handleTriggerExists', () => {
     it('should return true for beforeSave, afterSave, and afterDelete triggers on blockchain classes', () => {
       const simpleMQAdapter = new SimpleMQAdapter();
