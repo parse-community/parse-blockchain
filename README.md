@@ -18,7 +18,7 @@
 
 | Package | Name | Version
 |--------|-----|------------|
-| [Blockchain](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/blockchain) | [@parse/react](https://www.npmjs.com/package/@parse/blockchain) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fblockchain.svg)](https://www.npmjs.com/package/@parse/blockchain) |
+| [Blockchain](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/blockchain) | [@parse/blockchain](https://www.npmjs.com/package/@parse/blockchain) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fblockchain.svg)](https://www.npmjs.com/package/@parse/blockchain) |
 | [Ethereum](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/ethereum) | [@parse/ethereum](https://www.npmjs.com/package/@parse/ethereum) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fethereum.svg)](https://www.npmjs.com/package/@parse/ethereum) |
 
 ## How It Works
