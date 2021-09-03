@@ -31,7 +31,7 @@ Parse Server saves a copy of the blockchain objects on cloud and make sure they 
 
 At anytime it is possible to query data on cloud via Parse Server APIs (including the transactions receipts) and verify the data on blockchain via smart contracts.
 
-The dApps frontend can easily integrate to the APIs, via [REST](https://docs.parseplatform.org/rest/guide/), [GraphQL](https://docs.parseplatform.org/graphql/guide/), or one of the techbology specific [SDKs](https://parseplatform.org/#sdks).
+The dApps frontend can easily integrate to the APIs, via [REST](https://docs.parseplatform.org/rest/guide/), [GraphQL](https://docs.parseplatform.org/graphql/guide/), or one of the technology specific [SDKs](https://parseplatform.org/#sdks).
 
 ## Getting Started
 
