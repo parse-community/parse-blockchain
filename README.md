@@ -59,7 +59,7 @@ npm init
 Install the required packages:
 
 ```sh
-npm install express parse-server @parse/blockchain @parse/ethereum --save
+npm install express parse-server @parse/blockchain @parse/ethereum web3 --save
 ```
 
 ### Deploying the Smart Contracts
@@ -124,6 +124,7 @@ const express = require('express');
 const { default: ParseServer } = require('parse-server');
 const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain');
 const { EthereumAdapter } = require('@parse/ethereum');
+const { default: Web3 } = require('web3');
 
 const app = express();
 
