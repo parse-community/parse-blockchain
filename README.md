@@ -186,7 +186,7 @@ This object will be sent to Parse Server, which will store it on MongoDB and sen
 
 ### Reading the object
 
-You can now query your object using the REST API to see the status changes the transaction recepit once it is confirmed.
+You can now query your objects using the REST API to see the status changes and the transaction receipt once it is confirmed.
 
 ```sh
 curl -X GET \
