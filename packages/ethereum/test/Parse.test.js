@@ -55,20 +55,101 @@ contract('Parse', (accounts) => {
       );
     });
 
-    it("should be restricted to the contract's owner", () => {
-      return contract
+    it('should be restricted to the contract and app owners', async () => {
+      await contract
         .createObject(
           'someappid',
           'SomeClass',
-          'someobjectid',
+          'someotherobjectid',
           JSON.stringify({ someField: 'someValue' }),
           {
             from: accounts[1],
           }
         )
         .should.be.rejectedWith(
-          /This function is restricted to the contract's owner/
+          /This function is restricted to the contract and app owners/
         );
+      await contract
+        .createObject(
+          'someotherappid',
+          'SomeClass',
+          'someotherobjectid',
+          JSON.stringify({ someField: 'someValue' }),
+          {
+            from: accounts[1],
+          }
+        )
+        .should.be.rejectedWith(
+          /This function is restricted to the contract and app owners/
+        );
+      const result1 = await contract.addAppOwner('someappid', accounts[1]);
+      expect(result1.logs.length).to.equal(1);
+      expect(result1.logs[0].event).to.equal('AppOwnerAdded');
+      expect(result1.logs[0].type).to.equal('mined');
+      expect(result1.logs[0].args._appId).to.equal('someappid');
+      expect(result1.logs[0].args._owner).to.equal(accounts[1]);
+      const result2 = await contract.createObject(
+        'someappid',
+        'SomeClass',
+        'someotherobjectid',
+        JSON.stringify({ someField: 'someValue' }),
+        {
+          from: accounts[0],
+        }
+      );
+      expect(result2.logs.length).to.equal(1);
+      expect(result2.logs[0].event).to.equal('ObjectCreated');
+      expect(result2.logs[0].type).to.equal('mined');
+      expect(result2.logs[0].args._appId).to.equal('someappid');
+      expect(result2.logs[0].args._className).to.equal('SomeClass');
+      expect(result2.logs[0].args._objectId).to.equal('someotherobjectid');
+      expect(result2.logs[0].args._objectJSON).to.equal(
+        JSON.stringify({ someField: 'someValue' })
+      );
+      await contract
+        .createObject(
+          'someotherappid',
+          'SomeClass',
+          'someotherobjectid',
+          JSON.stringify({ someField: 'someValue' }),
+          {
+            from: accounts[1],
+          }
+        )
+        .should.be.rejectedWith(
+          /This function is restricted to the contract and app owners/
+        );
+      const result3 = await contract.addAppOwner('someotherappid', accounts[1]);
+      expect(result3.logs.length).to.equal(2);
+      expect(result3.logs[0].event).to.equal('AppCreated');
+      expect(result3.logs[0].type).to.equal('mined');
+      expect(result3.logs[0].args._appId).to.equal('someotherappid');
+      expect(result3.logs[1].event).to.equal('AppOwnerAdded');
+      expect(result3.logs[1].type).to.equal('mined');
+      expect(result3.logs[1].args._appId).to.equal('someotherappid');
+      expect(result3.logs[1].args._owner).to.equal(accounts[1]);
+      const result4 = await contract.createObject(
+        'someotherappid',
+        'SomeClass',
+        'someotherobjectid',
+        JSON.stringify({ someField: 'someValue' }),
+        {
+          from: accounts[0],
+        }
+      );
+      expect(result4.logs.length).to.equal(2);
+      expect(result4.logs[0].event).to.equal('ClassCreated');
+      expect(result4.logs[0].type).to.equal('mined');
+      expect(result4.logs[0].args._appId).to.equal('someotherappid');
+      expect(result4.logs[0].args._className).to.equal('SomeClass');
+      expect(result4.logs[1].event).to.equal('ObjectCreated');
+      expect(result4.logs[1].type).to.equal('mined');
+      expect(result4.logs[1].args._appId).to.equal('someotherappid');
+      expect(result4.logs[1].args._className).to.equal('SomeClass');
+      expect(result4.logs[1].args._objectId).to.equal('someotherobjectid');
+      expect(result4.logs[1].args._objectJSON).to.equal(
+        JSON.stringify({ someField: 'someValue' })
+      );
     });
 
     it('should require _appId', () => {
@@ -333,6 +414,183 @@ contract('Parse', (accounts) => {
           'inexistentobjectid'
         )
         .should.be.rejectedWith(/The object does not exist/);
+    });
+  });
+
+  describe('addAppOwner', () => {
+    it('should add app owner to new app', async () => {
+      const result = await contract.addAppOwner('somenewappid', accounts[2]);
+      expect(result.logs.length).to.equal(2);
+      expect(result.logs[0].event).to.equal('AppCreated');
+      expect(result.logs[0].type).to.equal('mined');
+      expect(result.logs[0].args._appId).to.equal('somenewappid');
+      expect(result.logs[1].event).to.equal('AppOwnerAdded');
+      expect(result.logs[1].type).to.equal('mined');
+      expect(result.logs[1].args._appId).to.equal('somenewappid');
+      expect(result.logs[1].args._owner).to.equal(accounts[2]);
+    });
+
+    it('should add app owner to existing app', async () => {
+      const result = await contract.addAppOwner('somenewappid', accounts[3]);
+      expect(result.logs.length).to.equal(1);
+      expect(result.logs[0].event).to.equal('AppOwnerAdded');
+      expect(result.logs[0].type).to.equal('mined');
+      expect(result.logs[0].args._appId).to.equal('somenewappid');
+      expect(result.logs[0].args._owner).to.equal(accounts[3]);
+    });
+
+    it('should be restricted to the contract and app owners', async () => {
+      await contract
+        .addAppOwner('somenewappid', accounts[5], { from: accounts[4] })
+        .should.be.rejectedWith(
+          /This function is restricted to the contract and app owners/
+        );
+      await contract
+        .addAppOwner('someothernewappid', accounts[5], { from: accounts[4] })
+        .should.be.rejectedWith(
+          /This function is restricted to the contract and app owners/
+        );
+      const result1 = await contract.addAppOwner('somenewappid', accounts[4], {
+        from: accounts[3],
+      });
+      expect(result1.logs.length).to.equal(1);
+      expect(result1.logs[0].event).to.equal('AppOwnerAdded');
+      expect(result1.logs[0].type).to.equal('mined');
+      expect(result1.logs[0].args._appId).to.equal('somenewappid');
+      expect(result1.logs[0].args._owner).to.equal(accounts[4]);
+      const result2 = await contract.addAppOwner(
+        'someothernewappid',
+        accounts[4],
+        {
+          from: accounts[0],
+        }
+      );
+      expect(result2.logs.length).to.equal(2);
+      expect(result2.logs[0].event).to.equal('AppCreated');
+      expect(result2.logs[0].type).to.equal('mined');
+      expect(result2.logs[0].args._appId).to.equal('someothernewappid');
+      expect(result2.logs[1].event).to.equal('AppOwnerAdded');
+      expect(result2.logs[1].type).to.equal('mined');
+      expect(result2.logs[1].args._appId).to.equal('someothernewappid');
+      expect(result2.logs[1].args._owner).to.equal(accounts[4]);
+    });
+
+    it('should require _appId', () => {
+      return contract
+        .addAppOwner('', accounts[6])
+        .should.be.rejectedWith(/_appId is required/);
+    });
+
+    it('should not allow duplicated owners', async () => {
+      contract
+        .addAppOwner('someothernewappid', accounts[4])
+        .should.be.rejectedWith(/The address is already an app owner/);
+      const result1 = await contract.removeAppOwner(
+        'someothernewappid',
+        accounts[4]
+      );
+      expect(result1.logs.length).to.equal(1);
+      expect(result1.logs[0].event).to.equal('AppOwnerRemoved');
+      expect(result1.logs[0].type).to.equal('mined');
+      expect(result1.logs[0].args._appId).to.equal('someothernewappid');
+      expect(result1.logs[0].args._owner).to.equal(accounts[4]);
+      const result2 = await contract.addAppOwner(
+        'someothernewappid',
+        accounts[4]
+      );
+      expect(result2.logs.length).to.equal(1);
+      expect(result2.logs[0].event).to.equal('AppOwnerAdded');
+      expect(result2.logs[0].type).to.equal('mined');
+      expect(result2.logs[0].args._appId).to.equal('someothernewappid');
+      expect(result2.logs[0].args._owner).to.equal(accounts[4]);
+    });
+  });
+
+  describe('removeAppOwner', () => {
+    it('should remove app owner', async () => {
+      const result = await contract.removeAppOwner('somenewappid', accounts[3]);
+      expect(result.logs.length).to.equal(1);
+      expect(result.logs[0].event).to.equal('AppOwnerRemoved');
+      expect(result.logs[0].type).to.equal('mined');
+      expect(result.logs[0].args._appId).to.equal('somenewappid');
+      expect(result.logs[0].args._owner).to.equal(accounts[3]);
+      await contract
+        .createObject(
+          'somenewappid',
+          'SomeClass',
+          'someothernewobjectid',
+          JSON.stringify({ someField: 'someValue' }),
+          {
+            from: accounts[3],
+          }
+        )
+        .should.be.rejectedWith(
+          /This function is restricted to the contract and app owners/
+        );
+      await contract
+        .addAppOwner('somenewappid', accounts[8], {
+          from: accounts[3],
+        })
+        .should.be.rejectedWith(
+          /This function is restricted to the contract and app owners/
+        );
+    });
+
+    it('should be restricted to the contract and app owners', async () => {
+      await contract
+        .removeAppOwner('someappid', accounts[1], { from: accounts[7] })
+        .should.be.rejectedWith(
+          /This function is restricted to the contract and app owners/
+        );
+      const result1 = await contract.addAppOwner('someappid', accounts[7], {
+        from: accounts[1],
+      });
+      expect(result1.logs.length).to.equal(1);
+      expect(result1.logs[0].event).to.equal('AppOwnerAdded');
+      expect(result1.logs[0].type).to.equal('mined');
+      expect(result1.logs[0].args._appId).to.equal('someappid');
+      expect(result1.logs[0].args._owner).to.equal(accounts[7]);
+      const result2 = await contract.removeAppOwner('someappid', accounts[1], {
+        from: accounts[7],
+      });
+      expect(result2.logs.length).to.equal(1);
+      expect(result2.logs[0].event).to.equal('AppOwnerRemoved');
+      expect(result2.logs[0].type).to.equal('mined');
+      expect(result2.logs[0].args._appId).to.equal('someappid');
+      expect(result2.logs[0].args._owner).to.equal(accounts[1]);
+      const result3 = await contract.removeAppOwner('someappid', accounts[7]);
+      expect(result3.logs.length).to.equal(1);
+      expect(result3.logs[0].event).to.equal('AppOwnerRemoved');
+      expect(result3.logs[0].type).to.equal('mined');
+      expect(result3.logs[0].args._appId).to.equal('someappid');
+      expect(result3.logs[0].args._owner).to.equal(accounts[7]);
+    });
+
+    it('should require _appId', () => {
+      return contract
+        .removeAppOwner('', accounts[1])
+        .should.be.rejectedWith(/_appId is required/);
+    });
+
+    it('should not allow to remove the owner twice', async () => {
+      await contract
+        .removeAppOwner('somenewappid', accounts[3])
+        .should.be.rejectedWith(/The address is not an app owner/);
+      const result1 = await contract.addAppOwner('somenewappid', accounts[3]);
+      expect(result1.logs.length).to.equal(1);
+      expect(result1.logs[0].event).to.equal('AppOwnerAdded');
+      expect(result1.logs[0].type).to.equal('mined');
+      expect(result1.logs[0].args._appId).to.equal('somenewappid');
+      expect(result1.logs[0].args._owner).to.equal(accounts[3]);
+      const result2 = await contract.removeAppOwner(
+        'somenewappid',
+        accounts[3]
+      );
+      expect(result2.logs.length).to.equal(1);
+      expect(result2.logs[0].event).to.equal('AppOwnerRemoved');
+      expect(result2.logs[0].type).to.equal('mined');
+      expect(result2.logs[0].args._appId).to.equal('somenewappid');
+      expect(result2.logs[0].args._owner).to.equal(accounts[3]);
     });
   });
 });
