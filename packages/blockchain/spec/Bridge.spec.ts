@@ -1,4 +1,7 @@
 import { Parse } from 'parse/node';
+
+global.Parse = Parse;
+
 import * as triggers from 'parse-server/lib/triggers';
 import MQAdapter, { Listener, Subscription } from '../src/MQAdapter';
 import SimpleMQAdapter from '../src/SimpleMQAdapter';

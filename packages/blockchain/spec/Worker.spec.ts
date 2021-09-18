@@ -1,4 +1,7 @@
 import { CoreManager, Parse } from 'parse/node';
+
+global.Parse = Parse;
+
 import MQAdapter from '../src/MQAdapter';
 import SimpleMQAdapter from '../src/SimpleMQAdapter';
 import { BlockchainStatus } from '../src/types';
