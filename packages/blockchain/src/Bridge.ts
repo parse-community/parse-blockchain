@@ -1,9 +1,9 @@
-import { Parse } from 'parse/node';
 import * as triggers from 'parse-server/lib/triggers';
 import { BlockchainStatus } from './types';
 import MQAdapter from './MQAdapter';
 import SimpleMQAdapter from './SimpleMQAdapter';
 
+const Parse = global.Parse;
 const getTrigger = triggers.getTrigger;
 const triggerExists = triggers.triggerExists;
 const maybeRunTrigger = triggers.maybeRunTrigger;

@@ -1,8 +1,8 @@
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
-import { Parse } from 'parse/node';
 import { BlockchainAdapter } from '@parse/blockchain';
 
+const Parse = global.Parse;
 const contractABI = require('../build/contracts/Parse.json').abi;
 
 export default class EthereumAdapter implements BlockchainAdapter {

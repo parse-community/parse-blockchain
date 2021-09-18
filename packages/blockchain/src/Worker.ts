@@ -1,8 +1,9 @@
-import { Parse } from 'parse/node';
 import { BlockchainStatus } from './types';
 import BlockchainAdapter from './BlockchainAdapter';
 import MQAdapter from './MQAdapter';
 import SimpleMQAdapter from './SimpleMQAdapter';
+
+const Parse = global.Parse;
 
 interface Options {
   waitSendingAttempts?: number;

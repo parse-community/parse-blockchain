@@ -1,5 +1,8 @@
 const { expect } = require('chai');
 const Parse = require('parse/node');
+
+global.Parse = Parse;
+
 const EthereumAdapter = require('../lib/EthereumAdapter').default;
 
 const ParseArtifact = artifacts.require('Parse');
