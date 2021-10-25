@@ -124,7 +124,7 @@ const express = require('express');
 const { default: ParseServer } = require('parse-server');
 const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain');
 const { EthereumAdapter } = require('@parse/ethereum');
-const { default: Web3 } = require('web3');
+const Web3 = require('web3');
 
 const app = express();
 
@@ -165,7 +165,7 @@ app.listen(1337, () => {
 From your project root folder, start the server:
 
 ```sh
-npm start
+node index.js
 ```
 
 A Parse Server instance will start on your local machine listening on port 1337.
