@@ -19,8 +19,7 @@
   },
   "homepage": "https://github.com/parse-community/parse-server-blockchain#readme",
   "dependencies": {
-    "@parse/blockchain": "file:../blockchain",
-    "@parse/ethereum": "file:../ethereum",
+    "@truffle/hdwallet-provider": "^1.5.1",
     "express": "^4.17.1",
     "ganache-cli": "^6.12.2",
     "mongodb-runner": "^4.8.3",
