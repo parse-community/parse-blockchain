@@ -20,25 +20,24 @@
   "homepage": "https://github.com/parse-community/parse-server-blockchain#readme",
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.5.1",
-    "express": "^4.17.1",
-    "ganache-cli": "^6.12.2",
-    "mongodb-runner": "^4.8.3",
-    "parse-server": "^4.10.4",
-    "truffle": "^5.4.16",
-    "web3": "^1.6.0"
+    "express": "4.17.1",
+    "ganache-cli": "6.12.2",
+    "mongodb-runner": "4.8.3",
+    "parse-server": "4.10.4",
+    "truffle": "5.4.16",
+    "web3": "1.6.0"
   },
   "devDependencies": {
-    "eslint": "^8.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.4.1"
+    "eslint": "8.1.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "prettier": "2.4.1"
   },
   "scripts": {
     "test": "echo \"Warning: no test specified\" && exit 0",
     "lint": "eslint '{src,spec}/**/*.{js,ts}' --fix",
     "prepare:dependencies": "npm pack ../blockchain --silent | xargs -I{} npm i --save {} && npm pack ../ethereum --silent | xargs -I{} npm i --save {}",
     "prepare:network": "ganache-cli --networkId 1000000000000",
-    "prepare:contracts": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
-    "prepare:db": "mongodb-runner start",
-    "start": "node index.js"
+    "prepare:contract": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
+    "start": "mongodb-runner start && node index.js"
   }
 }
