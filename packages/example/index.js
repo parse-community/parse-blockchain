@@ -17,7 +17,7 @@ const mqAdapter = new SimpleMQAdapter();
 
 const web3 = new Web3('ws://127.0.0.1:8545');
 web3.eth.accounts.wallet.add(
-   'THE ACCOUNT PRIVATE KEY', // Copy to here the private key that you used to deploy the contracts
+   'ACCOUNT_PRIVATE_KEY', // Copy to here the private key that you used to deploy the contracts
 );
 
 bridge.initialize(
@@ -27,8 +27,8 @@ bridge.initialize(
 worker.initialize(
   new EthereumAdapter(
     web3,
-    'THE CONTRACT ADDRESS', // Copy to here the Parse contract address that you copied after deploying it
-    'THE ACCOUNT ADDRESS', // Copy to here the address that you used to deploy the contracts
+    'CONTRACT_ADDRESS', // Copy to here the Parse contract address that you copied after deploying it
+    'ACCOUNT_ADDRESS', // Copy to here the address that you used to deploy the contracts
   ),
   mqAdapter
 );
