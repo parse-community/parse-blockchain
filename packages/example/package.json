@@ -1,0 +1,41 @@
+{
+  "name": "@parse/blockchain-example",
+  "version": "1.0.0-alpha.1",
+  "description": "An example repository to connect Parse Server to a blockchain network.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parse-community/parse-server-blockchain.git"
+  },
+  "keywords": [
+    "parse",
+    "server",
+    "blockchain"
+  ],
+  "author": "Parse Platform <hello@parseplatform.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/parse-community/parse-server-blockchain/issues"
+  },
+  "homepage": "https://github.com/parse-community/parse-server-blockchain#readme",
+  "dependencies": {
+    "@parse/blockchain": "file:../blockchain",
+    "@parse/ethereum": "file:../ethereum",
+    "express": "^4.17.1",
+    "ganache-cli": "^6.12.2",
+    "mongodb-runner": "^4.8.3",
+    "parse-server": "^4.10.4",
+    "truffle": "^5.4.16",
+    "web3": "^1.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "lint": "eslint '{src,spec}/**/*.{js,ts}' --fix",
+    "start": "node index.js"
+  }
+}
