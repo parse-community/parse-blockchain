@@ -39,7 +39,6 @@
     "start:network": "ganache-cli --networkId 1000000000000",
     "start:contracts": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
     "start:db": "mongodb-runner start",
-    "start:server": "node index.js",
-    "start": "npm run start:network && npm run start:contracts && npm run start:db && npm run start:server"
+    "start:server": "node index.js"
   }
 }
