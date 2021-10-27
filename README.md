@@ -40,7 +40,8 @@ The dApps frontend can easily integrate to the APIs, via [REST](https://docs.par
 You will need an Ethereum development network. With [Ganache](https://github.com/trufflesuite/ganache), it can be easily done using the command below:
 
 ```sh
-npx ganache-cli --networkId 1000000000000 # it can be any id
+npm install ganache-cli --global
+ganache-cli --networkId 1000000000000 # it can be any id
 ```
 
 Ganache will automatically start a development Ethereum network on your local machine which will listen on port 8545 by default. Once it is done, it will also automatically create and print a set of test accounts with 100 development ETH each. Copy the address and the private key of one of them to use for your smart contracts deployment and execution.
