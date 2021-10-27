@@ -8,8 +8,8 @@ const app = express();
 
 const parseServer = new ParseServer({
   serverURL: 'http://localhost:1337/parse',
-  appId: 'someappid',
-  masterKey: 'somemasterkey',
+  appId: 'hello',
+  masterKey: 'world',
   databaseURI: 'mongodb://localhost:27017/parseserverblockchaindev',
 });
 

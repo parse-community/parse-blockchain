@@ -36,9 +36,10 @@
   "scripts": {
     "test": "echo \"Warning: no test specified\" && exit 0",
     "lint": "eslint '{src,spec}/**/*.{js,ts}' --fix",
-    "start:network": "ganache-cli --networkId 1000000000000",
-    "start:contracts": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
-    "start:db": "mongodb-runner start",
-    "start:server": "node index.js"
+    "prepare:dependencies": "npm pack ../blockchain --silent | xargs -I{} npm i --save {} && npm pack ../ethereum --silent | xargs -I{} npm i --save {}",
+    "prepare:network": "ganache-cli --networkId 1000000000000",
+    "prepare:contracts": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
+    "prepare:db": "mongodb-runner start",
+    "start": "node index.js"
   }
 }
