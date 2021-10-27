@@ -1,6 +1,6 @@
 module.exports = {
   /**
-   * The following are default values that you do not need to modify.
+   * The following values do not need to be modified for this example to work.
    */
   // The names of the classes whose objects you want to send to blockchain
   classNames: ['SomeBlockchainClass'],
@@ -8,7 +8,7 @@ module.exports = {
   networkId: '1000000000000',
 
   /**
-   * The following values need to be entered to run the example setup.
+   * The following values need to be modified for this example to work.
    */
   // Paste a public account address after running `npm run prepare:network`
   accountAddress: 'ACCOUNT_ADDRESS',
