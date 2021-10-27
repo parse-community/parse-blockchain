@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const express = require('express');
 const { default: ParseServer } = require('parse-server');
 const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain');
@@ -17,20 +18,11 @@ const parseServer = new ParseServer({
 const mqAdapter = new SimpleMQAdapter();
 
 const web3 = new Web3('ws://127.0.0.1:8545');
-web3.eth.accounts.wallet.add(
-   config.accountPrivateKey,
-);
+web3.eth.accounts.wallet.add(config.accountPrivateKey);
 
-bridge.initialize(
-  config.classNames,
-  mqAdapter
-);
+bridge.initialize(config.classNames, mqAdapter);
 worker.initialize(
-  new EthereumAdapter(
-    web3,
-    config.contractAddress,
-    config.accountAddress
-  ),
+  new EthereumAdapter(web3, config.contractAddress, config.accountAddress),
   mqAdapter
 );
 
