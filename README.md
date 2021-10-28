@@ -1,18 +1,29 @@
-<p align="center">
-  <a href="https://parseplatform.org">
-    <img alt="Parse Platform" src="https://user-images.githubusercontent.com/8621344/99892392-6f32dc80-2c42-11eb-8c32-db0fa4a66a81.png" width="200" />
-  </a>
-</p>
+![parse-repository-header](https://user-images.githubusercontent.com/5673677/139276658-d6fa5e86-da3e-446e-9daa-f717469d4c7a.png)
+
+---
 
 <h2 align="center">
-  Blockchain (Ethereum) dApps development made easy with <a href="https://github.com/parse-community/parse-server">Parse Server</a> <i>(alpha)</i>
+  Blockchain (Ethereum) dApps development made easy with <a href="https://github.com/parse-community/parse-server">Parse Server</a>
 </h2>
 
 <p align="center">
-  This monorepo (mono respository) contains experimental packages that aim to make easy the development of blockchain (at the moment, only Ethereum networks are supported) dApps, via <a href="https://github.com/parse-community/parse-server">Parse Server</a> auto-generated APIs.
+  This mono respository contains packages that aim to make easy the development of blockchain dApps, via <a href="https://github.com/parse-community/parse-server">Parse Server</a> auto-generated APIs. At the moment, only Ethereum networks are supported. <i>These packages are experimental and not for use in production.</i>
 </p>
 
-<br>
+---
+
+- [Packages](#packages)
+- [How It Works](#how-it-works)
+- [Getting Started](#getting-started)
+  - [Running an Ethereum Development Network](#running-an-ethereum-development-network)
+  - [Creating the Project Folder](#creating-the-project-folder)
+  - [Deploying the Smart Contracts](#deploying-the-smart-contracts)
+  - [Running the Database](#running-the-database)
+  - [Running Parse Server](#running-parse-server)
+  - [Creating your first object](#creating-your-first-object)
+  - [Reading the object](#reading-the-object)
+- [Learn More](#learn-more)
+- [Feedback and Contribution](#feedback-and-contribution)
 
 ## Packages 
 
