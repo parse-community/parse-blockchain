@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/parse-community/parse-server-blockchain#readme",
   "dependencies": {
+    "@parse/blockchain": "1.0.0-alpha.1",
+    "@parse/blockchain-ethereum": "1.0.0-alpha.1",
     "@truffle/hdwallet-provider": "1.5.1",
     "express": "4.17.1",
     "ganache-cli": "6.12.2",
@@ -39,7 +41,6 @@
   "scripts": {
     "test": "echo \"Warning: no test specified\" && exit 0",
     "lint": "eslint '{src,spec}/**/*.{js,ts}' --fix",
-    "prepare:dependencies": "npm pack ../blockchain --silent | xargs -I{} npm i --save {} && npm pack ../ethereum --silent | xargs -I{} npm i --save {}",
     "prepare:network": "ganache-cli --networkId 1000000000000",
     "prepare:contract": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
     "start": "mongodb-runner start && node ./src/index.js"
