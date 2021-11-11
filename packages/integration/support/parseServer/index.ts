@@ -4,9 +4,6 @@ import Web3 from 'web3';
 import { SimpleMQAdapter, bridge, worker } from '@parse/blockchain';
 import { EthereumAdapter } from '@parse/blockchain-ethereum';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const contract = require('../../../ethereum/build/contracts/Parse.json');
-
 let parseServer;
 let expressServer;
 
@@ -44,6 +41,8 @@ export async function start(): Promise<void> {
     ['SomeBlockchainClass', 'SomeBlockchainClassWithTriggers'],
     mqAdapter
   );
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const contract = require('../../../ethereum/build/contracts/Parse.json');
   worker.initialize(
     new EthereumAdapter(
       web3,
