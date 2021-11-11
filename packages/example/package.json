@@ -2,6 +2,7 @@
   "name": "@parse/blockchain-example",
   "version": "1.0.0-alpha.1",
   "description": "An example repository to connect Parse Server to a blockchain network.",
+  "private": true,
   "main": "index.js",
   "repository": {
     "type": "git",
