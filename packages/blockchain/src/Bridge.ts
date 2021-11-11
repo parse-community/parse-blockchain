@@ -3,7 +3,8 @@ import { BlockchainStatus } from './types';
 import MQAdapter from './MQAdapter';
 import SimpleMQAdapter from './SimpleMQAdapter';
 
-const Parse = global.Parse;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Parse = (global as any).Parse;
 const getTrigger = triggers.getTrigger;
 const triggerExists = triggers.triggerExists;
 const maybeRunTrigger = triggers.maybeRunTrigger;
