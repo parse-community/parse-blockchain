@@ -4,10 +4,7 @@ import * as ganache from '../support/ganache';
 import * as truffle from '../support/truffle';
 import * as parseServer from '../support/parseServer';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const contractDefinition = require('../../ethereum/build/contracts/Parse.json');
-const contractABI = contractDefinition.abi;
-let contractAddress;
+let contractDefinition, contractABI, contractAddress;
 
 describe('Integration tests', () => {
   let web3, contract;
@@ -15,12 +12,16 @@ describe('Integration tests', () => {
   beforeAll(async () => {
     await ganache.start();
     await truffle.migrate();
-    contractAddress = contractDefinition.networks['1000000000000'].address.toLowerCase();
     await parseServer.start();
     web3 = new Web3('ws://127.0.0.1:8545');
     web3.eth.accounts.wallet.add(
       '86ae9c6148520e120a7f01ad06346a3b455ca181e7300bcede8c290d9fbfddbb'
     );
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    contractDefinition = require('../../ethereum/build/contracts/Parse.json');
+    contractABI = contractDefinition.abi;
+    contractAddress =
+      contractDefinition.networks['1000000000000'].address.toLowerCase();
     contract = new web3.eth.Contract(contractABI, contractAddress);
   }, 60000);
 
