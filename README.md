@@ -7,7 +7,7 @@
 </h2>
 
 <p align="center">
-  This mono respository contains packages that aim to simplify the development of blockchain dApps via <a href="https://github.com/parse-community/parse-server">Parse Server</a> auto-generated APIs. Currently, only Ethereum networks are supported. <i>These packages are experimental and not for use in production.</i>
+  This mono respository contains packages that aim to simplify the development of blockchain dApps via <a href="https://github.com/parse-community/parse-server">Parse Server</a> auto-generated APIs. Currently, only Ethereum networks are supported.
 </p>
 
 ---
