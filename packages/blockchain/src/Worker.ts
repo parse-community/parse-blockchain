@@ -3,7 +3,8 @@ import BlockchainAdapter from './BlockchainAdapter';
 import MQAdapter from './MQAdapter';
 import SimpleMQAdapter from './SimpleMQAdapter';
 
-const Parse = global.Parse;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Parse = (global as any).Parse;
 
 interface Options {
   waitSendingAttempts?: number;
