@@ -2,7 +2,7 @@
   "name": "@parse/blockchain-ethereum",
   "version": "0.0.0",
   "author": "Parse Community <admin@parseplatform.org>",
-  "description": "An experimental package that connects Parse Server to an Ethereum network.",
+  "description": "Connects Parse Server to an Ethereum network.",
   "keywords": [    
     "parse",
     "parse server",

@@ -2,7 +2,7 @@
   "name": "@parse/blockchain",
   "version": "0.0.0",
   "author": "Parse Community <admin@parseplatform.org>",
-  "description": "An experimental package that connects Parse Server to blockchain networks.",
+  "description": "Connects Parse Server to blockchain networks.",
   "keywords": [    
     "parse",
     "parse server",
