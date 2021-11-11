@@ -2,7 +2,7 @@ import ParseServer from 'parse-server';
 import express from 'express';
 import Web3 from 'web3';
 import { SimpleMQAdapter, bridge, worker } from '@parse/blockchain';
-import { EthereumAdapter } from '@parse/ethereum';
+import { EthereumAdapter } from '@parse/blockchain-ethereum';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const contract = require('../../../ethereum/build/contracts/Parse.json');

@@ -30,7 +30,7 @@
 | Package | Name | Version
 |--------|-----|------------|
 | [Blockchain](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/blockchain) | [@parse/blockchain](https://www.npmjs.com/package/@parse/blockchain) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fblockchain.svg)](https://www.npmjs.com/package/@parse/blockchain) |
-| [Ethereum](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/ethereum) | [@parse/ethereum](https://www.npmjs.com/package/@parse/ethereum) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fethereum.svg)](https://www.npmjs.com/package/@parse/ethereum) |
+| [Ethereum](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/ethereum) | [@parse/blockchain-ethereum](https://www.npmjs.com/package/@parse/blockchain-ethereum) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fethereum.svg)](https://www.npmjs.com/package/@parse/blockchain-ethereum) |
 
 ## How It Works
 
@@ -70,12 +70,12 @@ npm init
 Install the required packages:
 
 ```sh
-npm install express parse-server @parse/blockchain @parse/ethereum web3 --save
+npm install express parse-server @parse/blockchain @parse/blockchain-ethereum web3 --save
 ```
 
 ### Deploying the Smart Contracts
 
-The @parse/ethereum package (installed on the previous step) contains all smart contracts that you need to deploy. We will use [Truffle](https://github.com/trufflesuite/truffle) for the deployment.
+The @parse/blockchain-ethereum package (installed on the previous step) contains all smart contracts that you need to deploy. We will use [Truffle](https://github.com/trufflesuite/truffle) for the deployment.
 
 First, you need to install Truffle:
 
@@ -90,9 +90,9 @@ const path = require('path');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 module.exports = {
-  contracts_directory: path.resolve(__dirname, './node_modules/@parse/ethereum/contracts'),
-  contracts_build_directory: path.resolve(__dirname, './node_modules/@parse/ethereum/build/contracts'),
-  migrations_directory: path.resolve(__dirname, './node_modules/@parse/ethereum/migrations'),
+  contracts_directory: path.resolve(__dirname, './node_modules/@parse/blockchain-ethereum/contracts'),
+  contracts_build_directory: path.resolve(__dirname, './node_modules/@parse/blockchain-ethereum/build/contracts'),
+  migrations_directory: path.resolve(__dirname, './node_modules/@parse/blockchain-ethereum/migrations'),
   networks: {
     parseserverblockchaindev: {
       provider: () =>
@@ -134,7 +134,7 @@ Create an `index.js` file in your project root folder with the following content
 const express = require('express');
 const { default: ParseServer } = require('parse-server');
 const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain');
-const { EthereumAdapter } = require('@parse/ethereum');
+const { EthereumAdapter } = require('@parse/blockchain-ethereum');
 const Web3 = require('web3');
 
 const app = express();
