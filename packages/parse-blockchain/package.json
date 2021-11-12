@@ -1,6 +1,6 @@
 {
   "name": "@parse/blockchain",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.1",
   "author": "Parse Community <hello@parseplatform.org>",
   "description": "Connects Parse Server to blockchain networks.",
   "keywords": [    

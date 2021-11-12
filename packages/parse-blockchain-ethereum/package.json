@@ -1,6 +1,6 @@
 {
   "name": "@parse/blockchain-ethereum",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.1",
   "author": "Parse Community <hello@parseplatform.org>",
   "description": "Connects Parse Server to an Ethereum network.",
   "keywords": [    
@@ -44,7 +44,7 @@
     "typescript": "4.3.2"
   },
   "dependencies": {
-    "@parse/blockchain": "0.0.0",
+    "@parse/blockchain": "1.0.0-alpha.1",
     "web3": "1.5.2"
   }
 }
