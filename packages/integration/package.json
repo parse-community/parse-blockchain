@@ -1,7 +1,7 @@
 {
   "name": "integration",
   "private": true,
-  "author": "Parse Community <admin@parseplatform.org>",
+  "author": "Parse Community <hello@parseplatform.org>",
   "license": "MIT",
   "scripts": {
     "lint": "eslint './**/*.{js,ts}' --fix",

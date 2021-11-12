@@ -1,7 +1,7 @@
 {
   "name": "@parse/blockchain-ethereum",
   "version": "0.0.0",
-  "author": "Parse Community <admin@parseplatform.org>",
+  "author": "Parse Community <hello@parseplatform.org>",
   "description": "Connects Parse Server to an Ethereum network.",
   "keywords": [    
     "parse",
