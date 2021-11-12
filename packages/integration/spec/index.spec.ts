@@ -1,3 +1,5 @@
+import * as path from 'path';
+import * as fs from 'fs';
 import Web3 from 'web3';
 import Parse from 'parse/node';
 import * as ganache from '../support/ganache';
@@ -17,8 +19,15 @@ describe('Integration tests', () => {
     web3.eth.accounts.wallet.add(
       '86ae9c6148520e120a7f01ad06346a3b455ca181e7300bcede8c290d9fbfddbb'
     );
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    contractDefinition = require('../../ethereum/build/contracts/Parse.json');
+    contractDefinition = JSON.parse(
+      fs.readFileSync(
+        path.resolve(
+          __dirname,
+          '../../parse-blockchain-ethereum/build/contracts/Parse.json'
+        ),
+        'utf8'
+      )
+    );
     contractABI = contractDefinition.abi;
     contractAddress =
       contractDefinition.networks['1000000000000'].address.toLowerCase();

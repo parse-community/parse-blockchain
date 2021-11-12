@@ -1,3 +1,5 @@
+import * as path from 'path';
+import * as fs from 'fs';
 import ParseServer from 'parse-server';
 import express from 'express';
 import Web3 from 'web3';
@@ -41,8 +43,15 @@ export async function start(): Promise<void> {
     ['SomeBlockchainClass', 'SomeBlockchainClassWithTriggers'],
     mqAdapter
   );
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const contract = require('../../../ethereum/build/contracts/Parse.json');
+  const contract = JSON.parse(
+    fs.readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../parse-blockchain-ethereum/build/contracts/Parse.json'
+      ),
+      'utf8'
+    )
+  );
   worker.initialize(
     new EthereumAdapter(
       web3,

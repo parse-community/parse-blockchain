@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/parse-community/parse-server-blockchain",
-    "directory": "packages/ethereum"
+    "directory": "packages/parse-blockchain-ethereum"
   },
   "bugs": "https://github.com/parse-community/parse-server-blockchain/issues",
   "license": "MIT",

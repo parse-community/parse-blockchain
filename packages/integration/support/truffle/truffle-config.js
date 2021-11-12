@@ -27,12 +27,18 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
-  contracts_directory: path.resolve(__dirname, '../../../ethereum/contracts'),
+  contracts_directory: path.resolve(
+    __dirname,
+    '../../../parse-blockchain-ethereum/contracts'
+  ),
   contracts_build_directory: path.resolve(
     __dirname,
-    '../../../ethereum/build/contracts'
+    '../../../parse-blockchain-ethereum/build/contracts'
   ),
-  migrations_directory: path.resolve(__dirname, '../../../ethereum/migrations'),
+  migrations_directory: path.resolve(
+    __dirname,
+    '../../../parse-blockchain-ethereum/migrations'
+  ),
 
   /**
    * Networks define how you connect to your ethereum client and let you set the
