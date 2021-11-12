@@ -12,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/parse-community/parse-server-blockchain",
-    "directory": "packages/blockchain"
+    "directory": "packages/parse-blockchain"
   },
   "bugs": "https://github.com/parse-community/parse-server-blockchain/issues",
   "license": "MIT",

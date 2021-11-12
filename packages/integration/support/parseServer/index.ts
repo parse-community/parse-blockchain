@@ -42,7 +42,7 @@ export async function start(): Promise<void> {
     mqAdapter
   );
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const contract = require('../../../ethereum/build/contracts/Parse.json');
+  const contract = require('../../../parse-blockchain-ethereum/build/contracts/Parse.json');
   worker.initialize(
     new EthereumAdapter(
       web3,
