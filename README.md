@@ -80,7 +80,7 @@ The @parse/blockchain-ethereum package (installed on the previous step) contains
 First, you need to install Truffle:
 
 ```
-npm install truffle --global
+npm install truffle @truffle/hdwallet-provider --global
 ```
 
 Second, you need to create a `truffle-config.js` file in your project root folder with the following content:
