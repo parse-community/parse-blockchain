@@ -13,7 +13,7 @@
     "posttest": "npm run stop-mongodb-runner"
   },
   "devDependencies": {
-    "@parse/blockchain": "1.0.0-alpha.1",
+    "@parse/blockchain-base": "1.0.0-alpha.1",
     "@parse/blockchain-ethereum": "1.0.0-alpha.1",
     "@types/jest": "27.0.1",
     "@typescript-eslint/eslint-plugin": "4.29.3",
