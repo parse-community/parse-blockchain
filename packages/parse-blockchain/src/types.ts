@@ -1,5 +1,5 @@
 export enum BlockchainStatus {
-  Sending = 'Sending',
-  Sent = 'Sent',
-  Failed = 'Failed',
+  Sending = 'sending',
+  Sent = 'sent',
+  Failed = 'failed',
 }

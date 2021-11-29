@@ -1,6 +1,8 @@
 import Bridge from './Bridge';
 import Worker from './Worker';
 
+export * from './types';
+
 export { default as BlockchainAdapter } from './BlockchainAdapter';
 
 export { default as MQAdapter } from './MQAdapter';

@@ -3,6 +3,7 @@ import { Parse } from 'parse/node';
 global.Parse = Parse;
 
 import * as triggers from 'parse-server/lib/triggers';
+import { BlockchainStatus } from '../src/types';
 import MQAdapter, { Listener, Subscription } from '../src/MQAdapter';
 import SimpleMQAdapter from '../src/SimpleMQAdapter';
 import Bridge from '../src/Bridge';
@@ -221,7 +222,7 @@ describe('Bridge', () => {
 
       const someObject = new Parse.Object('SomeClass');
       someObject.id = 'someid';
-      someObject.set('blockchainStatus', 'Sending');
+      someObject.set('blockchainStatus', BlockchainStatus.Sending);
 
       try {
         await triggers.maybeRunTrigger(
@@ -367,7 +368,7 @@ describe('Bridge', () => {
 
       const sameObject = new Parse.Object('SomeClass');
       sameObject.id = 'someid';
-      sameObject.set('blockchainStatus', 'Sending');
+      sameObject.set('blockchainStatus', BlockchainStatus.Sending);
 
       await triggers.maybeRunTrigger(
         triggers.Types.beforeSave,
@@ -398,11 +399,11 @@ describe('Bridge', () => {
 
       const someObject = new Parse.Object('SomeClass');
       someObject.id = 'someid';
-      someObject.set('blockchainStatus', 'Sending');
+      someObject.set('blockchainStatus', BlockchainStatus.Sending);
 
       const sameObject = new Parse.Object('SomeClass');
       sameObject.id = 'someid';
-      sameObject.set('blockchainStatus', 'Sent');
+      sameObject.set('blockchainStatus', BlockchainStatus.Sent);
       sameObject.set('blockchainResult', {});
 
       await triggers.maybeRunTrigger(
