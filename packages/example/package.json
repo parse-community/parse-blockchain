@@ -1,24 +1,16 @@
 {
   "name": "@parse/blockchain-example",
-  "version": "1.0.0-alpha.1",
-  "description": "An example repository to connect Parse Server to a blockchain network.",
   "private": true,
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/parse-community/parse-server-blockchain.git"
-  },
-  "keywords": [
-    "parse",
-    "server",
-    "blockchain"
-  ],
   "author": "Parse Platform <hello@parseplatform.org>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/parse-community/parse-server-blockchain/issues"
+  "scripts": {
+    "lint": "eslint '{src,spec}/**/*.js' --fix",
+    "pretest": "npm run lint",
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "prepare:network": "ganache-cli --networkId 1000000000000",
+    "prepare:contract": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
+    "start": "mongodb-runner start && node ./src/index.js"
   },
-  "homepage": "https://github.com/parse-community/parse-server-blockchain#readme",
   "dependencies": {
     "@parse/blockchain": "1.0.0-alpha.1",
     "@parse/blockchain-ethereum": "1.0.0-alpha.1",
@@ -26,23 +18,12 @@
     "express": "4.17.1",
     "ganache-cli": "6.12.2",
     "mongodb-runner": "4.8.3",
-    "parse-server": "4.10.4",
     "truffle": "5.4.16",
     "web3": "1.6.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.2.0",
-    "@typescript-eslint/parser": "5.2.0",
     "eslint": "8.1.0",
     "eslint-plugin-prettier": "4.0.0",
-    "prettier": "2.4.1",
-    "typescript": "4.4.4"
-  },
-  "scripts": {
-    "test": "echo \"Warning: no test specified\" && exit 0",
-    "lint": "eslint '{src,spec}/**/*.{js,ts}' --fix",
-    "prepare:network": "ganache-cli --networkId 1000000000000",
-    "prepare:contract": "truffle migrate --config ./truffle-config.js --network parseserverblockchaindev",
-    "start": "mongodb-runner start && node ./src/index.js"
+    "prettier": "2.4.1"
   }
 }

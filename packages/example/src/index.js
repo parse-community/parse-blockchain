@@ -1,8 +1,7 @@
-/* eslint @typescript-eslint/no-var-requires: "off" */
 const express = require('express');
 const { default: ParseServer } = require('parse-server');
 const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain');
-const { EthereumAdapter } = require('@parse/ethereum');
+const { EthereumAdapter } = require('@parse/blockchain-ethereum');
 const Web3 = require('web3');
 const config = require('./config');
 
@@ -10,8 +9,8 @@ const app = express();
 
 const parseServer = new ParseServer({
   serverURL: 'http://localhost:1337/parse',
-  appId: 'hello',
-  masterKey: 'world',
+  appId: 'someappid',
+  masterKey: 'somemasterkey',
   databaseURI: 'mongodb://localhost:27017/parseserverblockchaindev',
 });
 
