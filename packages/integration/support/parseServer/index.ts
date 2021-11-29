@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import ParseServer from 'parse-server';
 import express from 'express';
 import Web3 from 'web3';
-import { SimpleMQAdapter, bridge, worker } from '@parse/blockchain';
+import { SimpleMQAdapter, bridge, worker } from '@parse/blockchain-base';
 import { EthereumAdapter } from '@parse/blockchain-ethereum';
 
 let parseServer;

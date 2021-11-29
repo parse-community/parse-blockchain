@@ -1,5 +1,5 @@
 {
-  "name": "@parse/blockchain",
+  "name": "@parse/blockchain-base",
   "version": "1.0.0-alpha.1",
   "author": "Parse Community <hello@parseplatform.org>",
   "description": "Connects Parse Server to blockchain networks.",
@@ -12,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/parse-community/parse-server-blockchain",
-    "directory": "packages/parse-blockchain"
+    "directory": "packages/parse-blockchain-base"
   },
   "bugs": "https://github.com/parse-community/parse-server-blockchain/issues",
   "license": "MIT",

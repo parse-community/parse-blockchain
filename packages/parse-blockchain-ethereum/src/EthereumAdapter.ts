@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
-import { BlockchainAdapter } from '@parse/blockchain';
+import { BlockchainAdapter } from '@parse/blockchain-base';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Parse = (global as any).Parse;

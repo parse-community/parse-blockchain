@@ -1,5 +1,5 @@
 {
-  "name": "@parse/blockchain-example",
+  "name": "example",
   "private": true,
   "author": "Parse Platform <hello@parseplatform.org>",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "start": "mongodb-runner start && node ./src/index.js"
   },
   "dependencies": {
-    "@parse/blockchain": "1.0.0-alpha.1",
+    "@parse/blockchain-base": "1.0.0-alpha.1",
     "@parse/blockchain-ethereum": "1.0.0-alpha.1",
     "@truffle/hdwallet-provider": "1.5.1",
     "express": "4.17.1",

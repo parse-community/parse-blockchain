@@ -29,7 +29,7 @@
 
 | Package | Name | Version
 |--------|-----|------------|
-| [Blockchain](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/parse-blockchain) | [@parse/blockchain](https://www.npmjs.com/package/@parse/blockchain) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fblockchain.svg)](https://www.npmjs.com/package/@parse/blockchain) |
+| [Blockchain](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/parse-blockchain-base) | [@parse/blockchain-base](https://www.npmjs.com/package/@parse/blockchain-base) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fblockchain.svg)](https://www.npmjs.com/package/@parse/blockchain-base) |
 | [Ethereum](https://github.com/parse-community/parse-server-blockchain/tree/master/packages/parse-blockchain-ethereum) | [@parse/blockchain-ethereum](https://www.npmjs.com/package/@parse/blockchain-ethereum) | [![NPM Version](https://badge.fury.io/js/%40parse%2Fethereum.svg)](https://www.npmjs.com/package/@parse/blockchain-ethereum) |
 
 ## How It Works
@@ -70,7 +70,7 @@ npm init
 Install the required packages:
 
 ```sh
-npm install express parse-server @parse/blockchain @parse/blockchain-ethereum web3 --save
+npm install express parse-server @parse/blockchain-base @parse/blockchain-ethereum web3 --save
 ```
 
 ### Deploying the Smart Contracts
@@ -133,7 +133,7 @@ Create an `index.js` file in your project root folder with the following content
 ```js
 const express = require('express');
 const { default: ParseServer } = require('parse-server');
-const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain');
+const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain-base');
 const { EthereumAdapter } = require('@parse/blockchain-ethereum');
 const Web3 = require('web3');
 

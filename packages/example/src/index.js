@@ -1,6 +1,6 @@
 const express = require('express');
 const { default: ParseServer } = require('parse-server');
-const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain');
+const { SimpleMQAdapter, bridge, worker } = require('@parse/blockchain-base');
 const { EthereumAdapter } = require('@parse/blockchain-ethereum');
 const Web3 = require('web3');
 const config = require('./config');

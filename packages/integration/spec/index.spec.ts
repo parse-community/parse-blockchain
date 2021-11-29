@@ -5,7 +5,7 @@ import Parse from 'parse/node';
 import * as ganache from '../support/ganache';
 import * as truffle from '../support/truffle';
 import * as parseServer from '../support/parseServer';
-import { BlockchainStatus } from '@parse/blockchain';
+import { BlockchainStatus } from '@parse/blockchain-base';
 
 let contractDefinition, contractABI, contractAddress;
 
