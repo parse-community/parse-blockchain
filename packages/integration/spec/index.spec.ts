@@ -5,6 +5,7 @@ import Parse from 'parse/node';
 import * as ganache from '../support/ganache';
 import * as truffle from '../support/truffle';
 import * as parseServer from '../support/parseServer';
+import { BlockchainStatus } from '@parse/blockchain';
 
 let contractDefinition, contractABI, contractAddress;
 
@@ -45,13 +46,13 @@ describe('Integration tests', () => {
     await someObject.save();
     const someObjectFullJSON = someObject._toFullJSON();
 
-    while (someObject.get('blockchainStatus') !== 'Sent') {
+    while (someObject.get('blockchainStatus') !== BlockchainStatus.Sent) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await someObject.fetch();
     }
 
     expect(someObject.get('someField')).toBe('someValue');
-    expect(someObject.get('blockchainStatus')).toBe('Sent');
+    expect(someObject.get('blockchainStatus')).toBe(BlockchainStatus.Sent);
     const blockchainResult = someObject.get('blockchainResult');
     expect(blockchainResult.type).toBe('Send');
     expect(blockchainResult.input).toBe(JSON.stringify(someObjectFullJSON));
@@ -116,7 +117,7 @@ describe('Integration tests', () => {
     const someObjectFullJSON = someObject._toFullJSON();
     delete someObjectFullJSON.someNotSavedField;
 
-    while (someObject.get('blockchainStatus') !== 'Sent') {
+    while (someObject.get('blockchainStatus') !== BlockchainStatus.Sent) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await someObject.fetch();
     }
@@ -124,7 +125,7 @@ describe('Integration tests', () => {
     expect(someObject.get('someField')).toBe('someValue');
     expect(someObject.get('someOtherField')).toBe('someOtherValue');
     expect(someObject.get('someNotSavedField')).toBe(undefined);
-    expect(someObject.get('blockchainStatus')).toBe('Sent');
+    expect(someObject.get('blockchainStatus')).toBe(BlockchainStatus.Sent);
     const blockchainResult = someObject.get('blockchainResult');
     expect(blockchainResult.type).toBe('Send');
     expect(blockchainResult.input).toBe(JSON.stringify(someObjectFullJSON));
@@ -233,7 +234,7 @@ describe('Integration tests', () => {
 
   it('should not be able to create new blockchain objects with blockchainStatus or blockchainResult', async () => {
     const someObject1 = new Parse.Object('SomeBlockchainClass');
-    someObject1.set('blockchainStatus', 'Sending');
+    someObject1.set('blockchainStatus', BlockchainStatus.Sending);
     try {
       await someObject1.save();
       throw new Error('Should throw an error');
@@ -272,15 +273,15 @@ describe('Integration tests', () => {
 
   it('should not be able to create new regular objects with blockchainStatus or blockchainResult', async () => {
     const someObject1 = new Parse.Object('SomeRegularClass');
-    someObject1.set('blockchainStatus', 'Sending');
+    someObject1.set('blockchainStatus', BlockchainStatus.Sending);
     await someObject1.save();
     await someObject1.fetch();
-    expect(someObject1.get('blockchainStatus')).toBe('Sending');
+    expect(someObject1.get('blockchainStatus')).toBe(BlockchainStatus.Sending);
     const someObject2 = new Parse.Object('SomeRegularClass');
-    someObject2.set('blockchainStatus', 'Sending');
+    someObject2.set('blockchainStatus', BlockchainStatus.Sending);
     await someObject2.save(null, { useMasterKey: true });
     await someObject2.fetch();
-    expect(someObject2.get('blockchainStatus')).toBe('Sending');
+    expect(someObject2.get('blockchainStatus')).toBe(BlockchainStatus.Sending);
     const someObject3 = new Parse.Object('SomeRegularClass');
     someObject3.set('blockchainResult', { someField: 'someValue' });
     await someObject3.save();
@@ -296,15 +297,15 @@ describe('Integration tests', () => {
       someField: 'someValue',
     });
     const someObject5 = new Parse.Object('SomeRegularClassWithTriggers');
-    someObject5.set('blockchainStatus', 'Sending');
+    someObject5.set('blockchainStatus', BlockchainStatus.Sending);
     await someObject5.save();
     await someObject5.fetch();
-    expect(someObject5.get('blockchainStatus')).toBe('Sending');
+    expect(someObject5.get('blockchainStatus')).toBe(BlockchainStatus.Sending);
     const someObject6 = new Parse.Object('SomeRegularClassWithTriggers');
-    someObject6.set('blockchainStatus', 'Sending');
+    someObject6.set('blockchainStatus', BlockchainStatus.Sending);
     await someObject6.save(null, { useMasterKey: true });
     await someObject6.fetch();
-    expect(someObject6.get('blockchainStatus')).toBe('Sending');
+    expect(someObject6.get('blockchainStatus')).toBe(BlockchainStatus.Sending);
     const someObject7 = new Parse.Object('SomeRegularClassWithTriggers');
     someObject7.set('blockchainResult', { someField: 'someValue' });
     await someObject7.save();
