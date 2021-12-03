@@ -113,7 +113,7 @@ Now, you are ready to deploy your smart contracts. From your project root folder
 truffle migrate --config ./truffle-config.js --network parseserverblockchaindev
 ```
 
-Truffle will deploy the smart contracts to the development Ethereum network and will print out the addresses. Please copy the Parse contract address.
+Truffle will deploy the smart contracts to the development Ethereum network and will print out two contract addresses (one for Parse and another for Migration). Please copy the Parse contract address.
 
 ### Running the Database
 
