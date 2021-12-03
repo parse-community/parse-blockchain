@@ -1,5 +1,8 @@
 {
   "name": "@parse/blockchain-ethereum",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "1.0.0-alpha.1",
   "author": "Parse Community <hello@parseplatform.org>",
   "description": "Connects Parse Server to an Ethereum network.",
@@ -46,5 +49,6 @@
   "dependencies": {
     "@parse/blockchain-base": "^1.0.0-alpha.1",
     "web3": "1.5.2"
-  }
+  },
+  "gitHead": "c7caf1eb3da898c60d9f13f765bd432f05063127"
 }
