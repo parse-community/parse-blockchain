@@ -7,7 +7,8 @@
     "clean": "lerna clean && rm -r node_modules",
     "install": "husky install && lerna bootstrap",
     "build": "lerna run build",
-    "test": "lerna run test --stream"
+    "test": "lerna run test --stream",
+    "release": "lerna publish"
   },
   "devDependencies": {
     "husky": "6.0.0",
