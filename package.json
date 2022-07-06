@@ -13,6 +13,6 @@
   "devDependencies": {
     "husky": "6.0.0",
     "lerna": "4.0.0",
-    "parse-server": "4.10.10"
+    "parse-server": "4.10.13"
   }
 }
